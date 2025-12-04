@@ -59,6 +59,7 @@ const NewArrivals = () => {
         container.removeEventListener("scroll", updateScrollButtons);
     }
   }, []);
+
   return (
     <section className="py-16 px-4 lg:px-0">
       <div className="container mx-auto text-center mb-10 relative">
