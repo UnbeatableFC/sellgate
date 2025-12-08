@@ -1,7 +1,14 @@
 import { IoMdClose } from "react-icons/io";
 import CartContents from "../cart/CartContents";
+import { useNavigate } from "react-router";
 
 const CardDrawer = ({ drawerOpen, toggleCartDrawer }) => {
+  const navigate = useNavigate();
+
+  const handleCheckOut = () => {
+    toggleCartDrawer();
+    navigate("/checkout");
+  };
   return (
     <div
       className={`fixed top-0 right-0 w-3/4 sm:w-1/2 md:w-120 h-full bg-white shadow-lg transform transition-transform duration-300 flex flex-col z-50 ${
@@ -23,7 +30,10 @@ const CardDrawer = ({ drawerOpen, toggleCartDrawer }) => {
 
       {/* CheckOut Button */}
       <div className="p-4 bg-white sticky bottom-0">
-        <button className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition cursor-pointer">
+        <button
+          onClick={handleCheckOut}
+          className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition cursor-pointer"
+        >
           Checkout
         </button>
         <p className="text-sm tracking-tighter text-gray-400 mt-2 text-justify">
