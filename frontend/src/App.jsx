@@ -9,6 +9,13 @@ import CollectionPage from "./pages/CollectionPage";
 import ProductDetails from "./components/products/ProductDetails";
 import Checkout from "./components/cart/Checkout";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
+import MyOrderPage from "./pages/MyOrderPage";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminHomepage from "./pages/AdminHomepage";
+import UserManagement from "./components/admin/UserManagement";
+import ProductManagement from "./components/admin/ProductManagement";
+import EditProductPage from "./components/admin/EditProductPage";
 
 const App = () => {
   return (
@@ -25,12 +32,23 @@ const App = () => {
             path="collections/:collection"
             element={<CollectionPage />}
           />
-          <Route path="product/:id" element ={<ProductDetails />} />
-          <Route path="checkout" element = {<Checkout />} />
-          <Route path="order-confirmation" element ={<OrderConfirmationPage />} />
+          <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route
+            path="order-confirmation"
+            element={<OrderConfirmationPage />}
+          />
+          <Route path="order/:id" element={<OrderDetailsPage />} />
+          <Route path="my-orders" element={<MyOrderPage />} />
         </Route>
 
-        <Route>{/* Admin Layout */}</Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          {/* Admin Layout */}
+          <Route index element={<AdminHomepage />} />
+          <Route path="users" element ={<UserManagement />} />
+          <Route path="products" element = {<ProductManagement />} />
+          <Route path="products/:id/edit" element = {<EditProductPage />} />
+        </Route>
       </Routes>
       <Toaster position="top-right" richColors />
     </BrowserRouter>
