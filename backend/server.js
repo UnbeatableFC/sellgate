@@ -1,29 +1,30 @@
-import express from "express"
-import cors from "cors"
-import dotenv from "dotenv"
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-import conenctDB from "./config/db.js"
-import userRoutes from "./routes/userRoutes.js"
- 
-const app = express()
+import conenctDB from "./config/db.js";
+import userRoutes from "./routes/userRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
-app.use(express.json())
-app.use(cors())
+const app = express();
 
-dotenv.config()
-const PORT = process.env.PORT
+app.use(express.json());
+app.use(cors());
+
+dotenv.config();
+const PORT = process.env.PORT;
 
 // Connect to MongoDB
-conenctDB()
+conenctDB();
 
-app.get("/" , (req , res) => {
-    res.send("Back end is working")
-})
+app.get("/", (req, res) => {
+  res.send("Back end is working");
+});
 
 // API Routes
-app.use("/api/users" , userRoutes)
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
 
-app.listen(PORT , () => {
-    console.log(`Server running on port ${PORT}`);
-    
-})
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
