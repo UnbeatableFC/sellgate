@@ -74,7 +74,7 @@ export const addProductToCart = async (req, res) => {
 };
 
 export const updateQuantityOnCart = async (req, res) => {
-  const { productId, quantity, size, color, guestId, userId } =
+  const { productId, quantity, size, color, guestId, userId } = 
     req.body;
   try {
     let cart = await getCart(userId, guestId);
@@ -117,6 +117,7 @@ export const updateQuantityOnCart = async (req, res) => {
 
 export const removeProductFromCart = async (req, res) => {
   const { productId, size, color, guestId, userId } = req.body;
+
   try {
     let cart = await getCart(userId, guestId);
     if (!cart) {

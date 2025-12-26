@@ -17,6 +17,12 @@ import adminOrderRoutes from "./routes/adminOrderRoutes.js";
 const app = express();
 
 app.use(express.json());
+app.use(
+  express.urlencoded({
+    // Parse form data
+    extended: true,
+  })
+);
 app.use(cors());
 
 dotenv.config();

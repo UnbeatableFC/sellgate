@@ -1,15 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 
-import { newArrivals } from "../lib/products";
 import FilterSidebar from "../components/products/FilterSidebar";
 import SortOptions from "../components/products/SortOptions";
 import ProductGrid from "../components/products/ProductGrid";
+import { useParams, useSearchParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductsByFilters } from "../redux/slices/productSlice";
 
 const CollectionPage = () => {
-  const [products, setProducts] = useState([]);
+  const { collection } = useParams();
+  const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const { products, loading, error } = useSelector(
+    (state) => state.products
+  );
+  const queryParams = Object.fromEntries([...searchParams]);
+
   const sidebarRef = useRef(null);
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      fetchProductsByFilters({
+        collection,
+        ...queryParams,
+      })
+    );
+  }, [dispatch, collection, searchParams]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -35,13 +54,6 @@ const CollectionPage = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const fetchProducts = newArrivals;
-
-      setProducts(fetchProducts);
-    }, 1000);
-  }, []);
   return (
     <div className="flex flex-col lg:flex-row">
       {/* Mobile Filter Button */}
@@ -68,7 +80,11 @@ const CollectionPage = () => {
         <SortOptions />
 
         {/* Products Grid */}
-        <ProductGrid products={products} />
+        <ProductGrid
+          products={products}
+          loading={loading}
+          error={error}
+        />
       </div>
     </div>
   );

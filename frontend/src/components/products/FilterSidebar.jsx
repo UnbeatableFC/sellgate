@@ -12,7 +12,7 @@ const FilterSidebar = () => {
     material: [],
     brand: [],
     minPrice: 0,
-    maxPrice: 100000,
+    maxPrice: 100,
   });
 
   const [priceRange, setPriceRange] = useState([0, 100000]);
@@ -68,10 +68,10 @@ const FilterSidebar = () => {
       material: params.material ? params.material.split(",") : [],
       brand: params.brand ? params.brand.split(",") : [],
       minPrice: params.minPrice || 0,
-      maxPrice: params.maxPrice || 100000,
+      maxPrice: params.maxPrice || 100,
     });
 
-    setPriceRange([0, params.maxPrice || 100000]);
+    setPriceRange([0, params.maxPrice || 100]);
   }, [searchParams]);
 
   const updateURLParams = (newFilters) => {
@@ -251,7 +251,7 @@ const FilterSidebar = () => {
           type="range"
           name="priceRange"
           min={0}
-          max={100000}
+          max={100}
           value={priceRange[1]}
           onChange={handlePriceChange}
           className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
