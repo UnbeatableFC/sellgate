@@ -64,7 +64,7 @@ export const updateUser = createAsyncThunk(
         }
       );
 
-      return response.data;
+      return response.data.user;
     } catch (error) {
       console.error(error);
       return rejectWithValue(error.response.data);
@@ -123,7 +123,7 @@ const adminSlice = createSlice({
       })
       .addCase(addUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.users.push(action.payload.user) // add a new user to the state
+        state.users.push(action.payload.user); // add a new user to the state
       })
       .addCase(addUser.rejected, (state, action) => {
         state.loading = false;
@@ -146,5 +146,4 @@ const adminSlice = createSlice({
   },
 });
 
-
-export default adminSlice.reducer
+export default adminSlice.reducer;

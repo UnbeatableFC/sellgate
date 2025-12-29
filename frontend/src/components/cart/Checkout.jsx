@@ -50,8 +50,10 @@ const Checkout = () => {
 
   const handlePaymentSuccess = async (details) => {
     try {
-      const res = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/checkout/pay`,
+      await axios.put(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/checkout/${checkoutId}/pay`,
         { paymentStatus: "paid", paymentDetails: details },
         {
           headers: {
@@ -61,11 +63,8 @@ const Checkout = () => {
           },
         }
       );
-      if (res.status === 200) {
-        await handleFinalizeCheckout(checkoutId); // Finalize checkout if payment is successful
-      } else {
-        console.error(error);
-      }
+
+      await handleFinalizeCheckout(checkoutId); // Finalize checkout if payment is successful
     } catch (error) {
       console.error(error);
     }
@@ -73,7 +72,7 @@ const Checkout = () => {
 
   const handleFinalizeCheckout = async (checkoutId) => {
     try {
-      const res = await axios.post(
+      await axios.post(
         `${
           import.meta.env.VITE_BACKEND_URL
         }/api/checkout/${checkoutId}/finalize`,
@@ -87,11 +86,7 @@ const Checkout = () => {
         }
       );
 
-      if (res.status === 200) {
-        navigate("/order-confirmation");
-      } else {
-        console.error(error);
-      }
+      navigate("/order-confirmation");
     } catch (error) {
       console.error(error);
     }
@@ -264,7 +259,7 @@ const Checkout = () => {
       <div className="bg-gray-50 p-6 rounded-lg">
         <h3 className="text-lg mb-4">Order Summary</h3>
         <div className="border-t py-4 mb-4">
-          {cart.checkedOutProducts.map((product, ind) => (
+          {cart.products.map((product, ind) => (
             <div
               key={ind}
               className="flex items-start justify-between py-2 border-b"

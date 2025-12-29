@@ -1,40 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router";
+import { fetchOrderDetails } from "../redux/slices/orderSlice";
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
-  const [orderDetails, setOrderDetails] = useState(null);
+  const dispatch = useDispatch();
+  const { orderDetails, loading, error } = useSelector(
+    (state) => state.orders
+  );
 
   useEffect(() => {
-    const mockOrderDetails = {
-      _id: id,
-      createdAt: new Date(),
-      isPaid: true,
-      isDelivered: false,
-      paymentMethod: "PayPal",
-      shippingMethod: "Standard",
-      shippingAddress: { city: "Lagos", country: "NGA" },
-      orderItems: [
-        {
-          productId: "1",
-          name: "Jacket",
-          price: 10000,
-          quantity: 1,
-          image: "https://picsum.photos/500/500?random=5",
-        },
-        {
-          productId: "2",
-          name: "Sneakers",
-          price: 16000,
-          quantity: 2,
-          image: "https://picsum.photos/500/500?random=51",
-        },
-      ],
-    };
+    dispatch(fetchOrderDetails(id));
+  }, [dispatch, id]);
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOrderDetails(mockOrderDetails);
-  }, [id]);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error}</p>;
+
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
       <h2 className="text-2xl md:text-3xl font-bold mb-6">
@@ -135,14 +117,21 @@ const OrderDetailsPage = () => {
                     </td>
                     <td className="py-2 px-4">₦{item.price}</td>
                     <td className="py-2 px-4">{item.quantity}</td>
-                    <td className="py-2 px-4">₦{item.price * item.quantity}</td>
+                    <td className="py-2 px-4">
+                      ₦{item.price * item.quantity}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           {/* Back to Order Page */}
-          <Link to={"/my-orders"} className="text-blue-500 hover:underline">Back To My Orders</Link>
+          <Link
+            to={"/my-orders"}
+            className="text-blue-500 hover:underline"
+          >
+            Back To My Orders
+          </Link>
         </div>
       )}
     </div>
